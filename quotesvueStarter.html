@@ -1,0 +1,109 @@
+<!--name: vamsitha-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container" style="padding: 30px;" id="app">
+        <div class="row justify-content-center" style="margin:30px">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <p> Hi {{name}}</p>
+                    <p> {{printGreeting()}}</p>
+                    <label for="quote-input">Quote</label>
+                    <textarea class="form-control" id="quote-input" rows="3" v-model="inputValues.quote"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="movie-input">Movie</label>
+                    <input type="text" class="form-control" id="movie-input" v-model="inputValues.movie">
+                </div>
+
+                <button class="btn btn-primary" v-on:click="addMovieQuote()">Submit</button>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-6">
+                <div id='quotes'>
+                    <div class="card" style="margin-bottom:10px;" v-for="aQuote in movieQuotes">
+                        <div class="card-body">
+                            <div class="blockquote mb-0">
+                                <p> {{aQuote.quote}}</p>
+                                <footer class="blockquote-footer"> {{ aQuote.movie}}</footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript">
+        const myApp = Vue.createApp({
+            data() {
+                return {
+                    name: 'Vamsitha',
+                    inputValues: {
+                        quote: "",
+                        movie: ""
+                    },
+                    movieQuotes: []
+                }
+            },
+            methods: {
+                printGreeting() {
+                    return 'Hi there, enter a movie and quote';
+                },
+                addMovieQuote() {
+                    this.movieQuotes.push({
+                        quote: this.inputValues.quote,
+                        movie: this.inputValues.movie
+                    })
+                    this.inputValues = {};
+                }
+            }
+        })
+        myApp.mount("#app");
+        //function addQuote() {
+
+        //    var quote = document.getElementById("quote-input").value;
+        //    var movie = document.querySelector("#movie-input").value
+
+
+        //    var myParagraph = document.createElement('p')
+        //    myParagraph.innerText = quote
+        //    var myFooter = document.createElement('footer')
+        //    myFooter.setAttribute('class', 'blockquote-footer')
+        //    myFooter.innerText = movie
+
+
+        //    var blockQuote = document.createElement('div')
+        //    blockQuote.setAttribute('class', "blockquote mb-0")
+
+        //    blockQuote.appendChild(myParagraph)
+        //    blockQuote.appendChild(myFooter)
+
+        //    var cardBody = document.createElement('div')
+        //    cardBody.setAttribute('class', "card-body")
+        //    cardBody.appendChild(blockQuote)
+
+        //    var card = document.createElement('div')
+        //    card.setAttribute('class', "card")
+        //    card.appendChild(cardBody)
+        //    card.style.marginBottom = "10px"
+
+        //    document.getElementById("quotes").prepend(card)
+
+        //    document.getElementById("quote-input").value = ""
+        //    document.querySelector("#movie-input").value = ""
+
+        //}
+    </script>
+</body>
+
+</html>

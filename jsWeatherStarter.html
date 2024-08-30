@@ -1,0 +1,100 @@
+<!--Name:Vamsitha-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .warm {
+            background-color: orange;
+        }
+
+        .pleasant {
+            background-color: yellow;
+        }
+
+        .cool {
+            background-color: mediumaquamarine;
+        }
+
+        .cold {
+            background-color: lightskyblue;
+        }
+
+        .colder {
+            background-color: deepskyblue;
+        }
+
+        .white {
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="padding: 30px;">
+        <div class="row justify-content-center" style="margin:30px">
+            <div class="col-md-5">
+                <form id="my-form">
+                    <div class="form-group">
+                        <label for="zip-input">Enter a zip code:</label>
+                        <input type="text" pattern="\d*" maxlength="5" required class="form-control" id="zip-input"
+                            title="Only zip codes allowed: 00000" autofocus>
+                    </div><br />
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-5 card" style="padding:90px" id='output'>
+                <div class="card-body">
+                    <h5 class="card-title text-center" id="weather-output">What's the weather?</h5>
+                    <p class="card-text text-center" id='location-output'>Enter a zip code to find out!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        document.getElementById("my-form").onsubmit = getWeather;
+
+        function getWeather(formEvent) {
+            formEvent.preventDefault();
+            let zipCode = document.getElementById("zip-input").value;
+            console.log("START");
+
+            fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&appid=5fd8646aac604ba4ef72ae1135fa07db&units=imperial`)
+                .then(aResponse => { return aResponse.json() })
+                .then(jsonData => {
+                    console.log(jsonData);
+                    document.getElementById("weather-output").innerText = jsonData.main.temp + "\u00B0F " + jsonData.weather[0].main;
+                    document.getElementById("location-output").innerText = jsonData.name + ", " + jsonData.sys.country;
+                    let outputSection = document.getElementById('output');
+                    let aTemp = jsonData.main.temp;
+                    let aColor = '';
+                    if (aTemp > 80) { aColor = 'warm' }
+                    else if (aTemp > 70) { aColor = 'pleasant' }
+                    else if (aTemp > 60) { aColor = 'cool' }
+                    else if (aTemp > 50) { aColor = 'cold' }
+                    else if (aTemp > 40) { aColor = 'colder' }
+                    else { aColor = 'white' }
+
+                    outputSection.classList.add(aColor);
+                    document.getElementById('zip-input').focus;
+                })
+                .catch(() => {
+                    document.getElementById("weather-output").innerText = "Location unknown";
+                    document.getElementById("location-output").innerText = "";
+                    document.getElementById('output').setAttribute('class', 'white');
+
+                })
+            console.log("END");
+        }
+    </script>
+</body>
+
+</html>

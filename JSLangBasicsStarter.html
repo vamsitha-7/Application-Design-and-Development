@@ -1,0 +1,50 @@
+<!--Name:Vamsitha-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="JSLangBasics.js" type="text/javascript" defer></script>
+    <title>Javascript - Language Basics</title>
+    <style>
+        body {
+            font-size: x-large;
+            width: 75%;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="testJS">
+    </div>
+    <button id="button-chat" style="font-size: xx-large;" onclick="chatClicked()">Chat Now</button>
+    <div id="chat-window"
+        style="width: 400px; min-height:180px; border: 1px solid gray; padding:10px; background-color: aqua; position: fixed; right:20px; bottom:20px; display:none">
+        <button id="close-chat" style="background-color: gray">Close</button>
+        <div id="chat-log"></div>
+        <textarea name="message" id="contact-msg" rows="4" style="width:100%;margin:10px 0px"></textarea>
+        <button id="send-chat" style="float:right">Send</button>
+    </div>
+    <script type="text/javascript">
+        function chatClicked() {
+            document.getElementById("chat-window").style.display = "inline";
+        }
+        document.getElementById("send-chat").onclick = function () {
+            let aTextArea = document.getElementById("contact-msg");
+            let aMessage = aTextArea.value;
+            if (aMessage === "") {
+                return;
+            }
+            var aPara = document.createElement("p")
+            aPara.innerHTML = "<strong>Me:</strong>" + aMessage;
+            document.querySelector("#chat-log").appendChild(aPara);
+            aTextArea.value = "";
+            aTextArea.focus();
+        }
+        document.getElementById("close-chat").onclick = function () {
+            document.getElementById("chat-window").style.display = "none";
+            document.getElementById("chat-log").innerHTML = "";
+        }
+    </script>
+</body>
+</html>
